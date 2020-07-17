@@ -1,0 +1,271 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SpringAjaxApp</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body class="bg-light">
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col bg-dark ">
+            <nav class="navbar navbar-light bg-dark">
+  <span class="navbar-text text-white">
+      <b> <td th:utext="${user.email}"></td></b>
+      <td>with roles:</td>
+      <td th:utext="${user.roles}"></td>
+  </span>
+                <a class="nav-link text-secondary font-weight-boldt  text-right" href="/logout">Logout</a>
+            </nav>
+        </div>
+    </div>
+    <div class="row h-100 ">
+        <div class="col-2  bg-white list-group">
+            <ul class="nav nav-tabs my-2 flex-column nav-pills">
+                <li class="nav-item" id="blockMenuforAdmin">
+                    <a class="nav-link active " data-toggle="tab" href="#main1">Admin</a>
+                </li>
+                <li class="nav-item" id="blockMenuforUser">
+                    <a class="nav-link " id="menuUser" data-toggle="tab" href="#main2">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col my-3 mx-3 tab-content">
+            <div class="tab-pane active " id="main1"><h2>Admin panel</h2>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active " id="usersTable" data-toggle="tab" href="#tab1">Users table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link addUser" data-toggle="tab" href="#tab2">New User</a>
+                    </li>
+                </ul>
+                <div class="row tab-content ">
+                    <div class="col  mx-3 border border-light tab-pane in active " id="tab1"
+                         style="background-color: #f5f5f5  ">
+                        <h5>All users</h5>
+                        <div class="row bg-white ">
+                            <div class="col my-3  ">
+                                <table class="table table-striped  ">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="table">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form for add User -->
+                    <div class="col tab-pane  mx-3 border border-light  " id="tab2" style="background-color: #f5f5f5  ">
+                        <h5>Add new user</h5>
+
+                        <form class="formAddUser">
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold my-2">
+                                    First name
+                                    <input type="text" name="firstName" class="form-control "></div>
+                            </div>
+
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold">
+                                    Last name
+                                    <input type="text" name="lastName" class="form-control"></div>
+                            </div>
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold my-2">
+                                    Age
+                                    <input type="number" name="age" class="form-control"></div>
+                            </div>
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold">
+                                    Email
+                                    <input type="email" name="email" class="form-control"></div>
+                            </div>
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold my-2">
+                                    Password
+                                    <input type="password" name="password" class="form-control"></div>
+                            </div>
+                            <div class="row  bg-white ">
+                                <div class="col-4 mx-auto text-center font-weight-bold">
+                                    Role
+                                    <select class="custom-select form-control" multiple name="role" size="2">
+                                        <option>ADMIN</option>
+                                        <option>USER</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success addUser my-2">Add new user
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="main2">
+                <h2>User information-page</h2>
+                <div class="row">
+                    <div class="col  mx-3 border border-light  " style="background-color: #f5f5f5  ">
+                        <h5>About user</h5>
+                        <div class="row bg-white ">
+                            <div class="col my-3  ">
+                                <table class="table table-striped  ">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="userTable">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal-->
+<div>
+    <form class="formEditUser">
+        <div id="myModal" class="modal fade " role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold ">
+                                ID
+                                <input type="number" name="id" id="idInput" readonly class="form-control "></div>
+                        </div>
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold my-2">
+                                First name
+                                <input type="text" name="firstName" id="firstNameInput" class="form-control "></div>
+                        </div>
+
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold">
+                                Last name
+                                <input type="text" name="lastName" id="lastNameInput" class="form-control"></div>
+                        </div>
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold my-2">
+                                Age
+                                <input type="number" name="age" id="ageInput" class="form-control"></div>
+                        </div>
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold">
+                                Email
+                                <input type="email" name="email" id="emailInput" class="form-control"></div>
+                        </div>
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold my-2">
+                                Password
+                                <input type="password" name="password" id="passwordInput" class="form-control"></div>
+                        </div>
+                        <div class="row  bg-white ">
+                            <div class="col-6 mx-auto text-center font-weight-bold">
+                                Role
+                                <select class="custom-select form-control" multiple name="role" id="roleInput" size="2">
+                                    <option>ADMIN</option>
+                                    &nbsp
+                                    <option>USER</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary editUser ">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal-->
+<div id="myModalDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDelete">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold ">
+                        ID
+                        <input type="number" name="id" id="id" readonly class="form-control "></div>
+                </div>
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold my-2">
+                        First name
+                        <input type="text" name="firstName" id="firstName" readonly class="form-control "></div>
+                </div>
+
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold">
+                        Last name
+                        <input type="text" name="lastName" id="lastName" readonly class="form-control"></div>
+                </div>
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold my-2">
+                        Age
+                        <input type="number" name="age" id="age" readonly class="form-control"></div>
+                </div>
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold">
+                        Email
+                        <input type="email" name="email" id="email" readonly class="form-control"></div>
+                </div>
+                <div class="row  bg-white ">
+                    <div class="col-6 mx-auto text-center font-weight-bold">
+                        Role
+                        <select class="form-control" name="role" readonly size="2">
+                            <option>ADMIN</option>
+                            <option>USER</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" data-dismiss="modal" class="btn btn-danger deleteUser ">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/table.js">
+</script>
+</body>
+</html>
